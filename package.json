@@ -27,8 +27,9 @@
     "dependencies": {
         "autoprefixer": "10.4.5",
         "babel-loader": "^8.2.5",
-        "babel-preset-es2015": "^6.24.1",
         "bootstrap-vue": "^2.22.0",
-        "vue": "^2.7.8"
+        "vform": "^2.1.2",
+        "vue": "^2.7.8",
+        "vue-router": "^3.5.4"
     }
 }

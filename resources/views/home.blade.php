@@ -3,6 +3,8 @@
 @section('content')
     <div class="container-fluid" id='app'>
         <h1 class="text-black-50">You are logged in!</h1>
-        <Test></Test>
+        {{-- <Test></Test> --}}
+
+        <router-view></router-view>
     </div>
 @endsection
