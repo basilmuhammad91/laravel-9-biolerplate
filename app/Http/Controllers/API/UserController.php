@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -12,10 +13,30 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+
+    public function __construct(User $users)
+    {
+        $this->users = $users;
+    }
+
+    public function index(Request $request)
     {
         //
-        return 200;
+        $users = $this->users;
+        //Check in any type of sorting
+        if($request->sortBy!=""){
+            //If the sorting is not related to Relations
+            $users=$users->orderBy($request->sortBy, ($request->sortDesc=="true")?"desc":"asc");
+        }else{
+            //Default Sorting
+            $users=$users->orderBy("id", "desc");
+        }
+        //Pagination
+        if(isset($request->numRows) && $request->numRows>0){
+            return $users->paginate($request->numRows);
+        }else{
+            return $users->get();
+        }
     }
 
     /**

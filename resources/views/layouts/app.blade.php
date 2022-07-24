@@ -65,7 +65,7 @@
 @include('layouts.sidebar')
 
 <!-- Content Wrapper. Contains page content -->
-    <div class="content-wrapper">
+    <div>
         <section class="content">
             @yield('content')
         </section>

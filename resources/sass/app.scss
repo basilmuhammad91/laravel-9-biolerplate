@@ -5,3 +5,11 @@
 // @import '~bootstrap/scss/bootstrap';
 @import '~admin-lte/build/scss/adminlte';
 
+// Fonts
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+
+// vuetify css
+@import "~vuetify/dist/vuetify.min.css";
+
+// Variables
+@import 'custom';
