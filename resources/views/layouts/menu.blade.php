@@ -5,3 +5,9 @@
         <p>Home</p>
     </a>
 </li>
+<li class="nav-item">
+    <router-link to="/test" class="nav-link">
+        <i class="nav-icon fas fa-tachometer-alt"></i>
+        <p>Test</p>
+    </router-link>
+</li>
