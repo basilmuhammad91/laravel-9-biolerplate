@@ -46,12 +46,12 @@
                   </div>
                   <!-- /.card-header -->
                   <div class="card-body table-responsive p-0">
-                    <!-- <v-data-table
+                    <v-data-table
                       :headers="headers"
                       :items="users.data ? users.data : users"
                       :server-items-length="users.total"
                       class="elevation-1"
-                      :loading="loading"
+                      :loading="isLoading"
                       :options.sync="options"
                       :search="search"
                       :footer-props="{
@@ -64,7 +64,6 @@
                           color="green"
                           class="edit-icon mr-2"
                           small
-                          @click="viewUser(item)"
                         >
                           mdi-eye
                         </v-icon>
@@ -73,8 +72,6 @@
                           color="blue"
                           class="edit-icon mr-2"
                           small
-                          @click="editUser(item)"
-                          v-if="(is('Super Admin') || can('edit_user'))"
                         >
                           mdi-pencil
                         </v-icon>
@@ -83,13 +80,11 @@
                           color="red"
                           class="delete-icon"
                           small
-                          @click="deleteUser(item.id)"
-                          v-if="(is('Super Admin') || can('delete_user'))"
                         >
                           mdi-delete
                         </v-icon>
                       </template>
-                    </v-data-table> -->
+                    </v-data-table>
                   </div>
                   <!-- /.card-body -->
                 </div>
@@ -111,7 +106,7 @@
                 {{ $t("message.UNAUTHORIZED") }}
               </v-alert>
             </div>
-          </div>
+             </div>
         </div>
       </div> -->
     </div>
@@ -119,42 +114,60 @@
 </template>
 
 <script>
+import useUsers from ".././composables/users";
+import { onMounted } from "vue";
+
 export default {
-  data() {
+  setup() {
+    const { users, isLoading, getUsers } = useUsers();
+    onMounted(getUsers);
+
     return {
-      form: new form(),
-      users: [],
+      //   form: new form(),
       curpage: 1,
       search: "",
       itemsPerPage: 10,
-      loading: true,
       options: {},
       sortBy: "",
-      sortDesc: ""
+      sortDesc: "",
+      users,
+      isLoading,
       //   userInfo: {},
-      //   headers: [
-      //     { text: this.$t("message.NAME"), value: "name" },
-      //     { text: this.$t("message.ROLE"), value: "roles[0].name" },
-      //     { text: this.$t("message.EMAIL"), value: "email" },
-      //     {
-      //       text: this.$t("message.ACTIONS"),
-      //       value: "actions",
-      //       sortable: false,
-      //     },
-      //   ],
+      headers: [
+        { text: "Name", value: "name" },
+        { text: "Email", value: "email" },
+        {
+          text: "Actions",
+          value: "actions",
+          sortable: false
+        }
+      ]
     };
   },
   components: {},
-  watch: {},
+  watch: {
+    options: {
+      handler() {
+        // this.getResults(
+        //   this.options.page ? this.options.page : null,
+        //   this.options.itemsPerPage ? this.options.itemsPerPage : null
+        // );
+      },
+      deep: true
+    },
+    search() {
+      console.log(200);
+    }
+  },
   methods: {
-    getUsers() {
-      axios
-        .get("/api/users")
-        .then(response => console.log("ALL USERS: ", response.data));
+    getResults() {
+      // this.$Progress.start()
+      // this.getAllUsers
+      // this.$Progress.finish();
     }
   },
   created() {
-    this.getUsers();
+    // this.getResults();
   }
 };
 </script>
